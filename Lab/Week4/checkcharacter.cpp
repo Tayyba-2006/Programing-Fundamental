@@ -12,7 +12,6 @@ int main()
     else if((c >= 'a' &&  c <= 'z')) 
     {cout<<"It is a consonant."<<endl;}
     else
-    {cout<<"This is a special character or symbol!";
-    }
+    {cout<<"This is a special character or symbol!";}
     return 0;
 }
