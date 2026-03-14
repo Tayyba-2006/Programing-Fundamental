@@ -5,7 +5,7 @@ main()
    int n1,n2;
    int lcm,hcf;
    int min;
-   cout<<"Enter first number: " ;
+   cout<<"Enter first number: ";
    cin>>n1;
    cout<<"Enter second number: ";
    cin>>n2;
@@ -17,7 +17,7 @@ main()
    {
      min=n1;
    }
-   for(int i=1; i<=min;i++)
+   for(int i=1;i<=min;i++)
    {
     if(n1%i==0 && n2%i==0)
     {
