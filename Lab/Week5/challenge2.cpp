@@ -5,7 +5,7 @@ main()
     int n,d;
     cout<<"Enter the number ";
     cin >> n;
-    cout<<"enter the digit: ";
+    cout<<"Enter the digit: ";
     cin >> d;
     int count=0;
     while(n>0)
