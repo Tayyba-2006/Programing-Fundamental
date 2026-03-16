@@ -7,7 +7,7 @@ main()
    cin>>n;
    cout<<"Enter the digit to check: ";
    cin>>d;
-   for(int i=1;i<=n;i++)
+   while(n!=0)
    {
     if(n%10==d)
     {
