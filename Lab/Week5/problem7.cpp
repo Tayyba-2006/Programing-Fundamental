@@ -7,7 +7,7 @@ main()
     cin>>n;
     if(n>=2)
     {
-    cout<<n1<<" , "<<n2;
+    cout<<n1<<", "<<n2;
     }
     else if(n==1)
     {
