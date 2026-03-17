@@ -1,4 +1,5 @@
 #include<iostream>
+#include<iomanip>
 using namespace std;
 int main()
 {
@@ -26,6 +27,7 @@ int main()
         p3= (count3*100)/n;
         p4= (count4*100)/n;
         p5= (count5*100)/n;
+    cout<<fixed<<setprecision(2);
     cout<<p1<<"%\n";
     cout<<p2<<"%\n";
     cout<<p3<<"%\n";
