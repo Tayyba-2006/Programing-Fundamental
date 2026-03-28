@@ -23,7 +23,7 @@ for(int i = 0; i<n; i++)
             }
         }
     }
-    cout<<"\nStudents in alphabetical order:\n";
+    cout<<"Students in alphabetical order:\n";
     for(int i = 0; i<n; i++)
     {
         cout<<word[i]<<endl;
