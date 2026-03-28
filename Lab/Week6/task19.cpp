@@ -5,7 +5,7 @@ int main()
     int n;
     cout<<"Enter the number of elements: ";
     cin >> n;
-    cout<<"Enter 5 elements of the array: \n";
+    cout<<"Enter "<<n<<" elements of the array: \n";
     int arr[n];
     for(int i=0; i<n; i++)
     {

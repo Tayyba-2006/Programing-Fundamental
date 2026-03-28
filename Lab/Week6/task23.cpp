@@ -2,18 +2,16 @@
 using namespace std;
 main()
 {
-  int n;
+    int n;
+    int sum = 0;
   cout<<"How many numbers you want to print: ";
   cin>>n;
   int numbers[n];
+  cout<<"Enter "<<n<<" numbers: \n";
   for(int idx=0;idx<n;idx++)
   {
-    cout<<"Enter number "<<idx+1<<":";
     cin>>numbers[idx];
+    sum=sum+numbers[idx];
   }
-  cout<<"You entered: ";
-  for(int idx=0;idx<n;idx++)
-  {
-   cout<<numbers[idx]<<" ";
-  }
+  cout<<"Sum of all elements: "<<sum;
 }
