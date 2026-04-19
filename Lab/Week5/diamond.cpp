@@ -11,7 +11,7 @@ main()
     }
     for(i=1;i<=r;i++)
     {
-        for(j=5;j>=i;j--)
+        for(j=4;j>=i;j--)
         cout<<"*";
         cout<<"\n";
     }
