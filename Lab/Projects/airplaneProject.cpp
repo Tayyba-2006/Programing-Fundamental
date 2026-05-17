@@ -1,6 +1,6 @@
 #include <iostream>
 #include <conio.h>
-#include<string>
+#include <string>
 #include <fstream>
 using namespace std;
 
@@ -30,10 +30,15 @@ void bookSeat(string flightID[], string departure[], string arrival[], string ti
 
 void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
 
-// FILE HANDLING
+// FILE HANDLING 
 
 void saveData(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
+
 void loadData(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount);
+
+void saveHistory(string history[], int historyCount);
+
+void loadHistory(string history[], int &historyCount);
 
 // ===== MAIN =====
 
@@ -47,6 +52,7 @@ int main()
     int historyCount = 0;
 
     loadData(flightID, departure, arrival, time, seats, flightCount);
+    loadHistory(history, historyCount);
 
     while (true)
     {
@@ -200,6 +206,7 @@ void addFlight(string flightID[], string departure[], string arrival[], string t
     flightCount++;
 
     saveData(flightID, departure, arrival, time, seats, flightCount);
+    saveHistory(history, historyCount);
 
     cout << "Flight Added Successfully!  \n";
     cout << "Press any key to continue.. \n";
@@ -247,6 +254,7 @@ void updateFlight(string flightID[], string departure[], string arrival[], strin
         {
             fCount = i;
             found = true;
+            break;
         }
     }
 
@@ -280,6 +288,7 @@ void updateFlight(string flightID[], string departure[], string arrival[], strin
         historyCount++;
 
         saveData(flightID, departure, arrival, time, seats, flightCount);
+        saveHistory(history, historyCount);
 
         cout << "Updated Successfully! \n";
     }
@@ -325,6 +334,7 @@ void deleteFlight(string flightID[], string departure[], string arrival[], strin
             historyCount++;
 
             saveData(flightID, departure, arrival, time, seats, flightCount);
+            saveHistory(history, historyCount);
 
             cout << "Deleted Successfully! \n";
             found = true;
@@ -382,6 +392,7 @@ void sortFlights(string flightID[], string departure[], string arrival[], string
         cout << "-------------------------------\n\n";
     }
 
+    saveData(flightID, departure, arrival, time, seats, flightCount);
     cout << "Flights sorted by ID successfully! \n";
     cout << "Press any key to continue.. \n";
     getch();
@@ -422,7 +433,7 @@ void customerMenu(string flightID[], string departure[], string arrival[], strin
             searchFlight(flightID, departure, arrival, time, seats, flightCount);
 
         else if (customerOption == "3")
-            bookSeat(flightID, departure , arrival , time, seats, flightCount);
+            bookSeat(flightID, departure, arrival, time, seats, flightCount);
 
         else if (customerOption == "4")
             cancelBooking(flightID, departure, arrival, time, seats, flightCount);
@@ -466,7 +477,7 @@ void searchFlight(string flightID[], string departure[], string arrival[], strin
     getch();
 }
 
-// BOOK
+// BOOK SEAT 
 void bookSeat(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount)
 {
     string IdToBook;
@@ -503,7 +514,7 @@ void bookSeat(string flightID[], string departure[], string arrival[], string ti
     getch();
 }
 
-// CANCEL
+// CANCEL BOOKING
 void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount)
 {
     string Flightid;
@@ -533,7 +544,7 @@ void cancelBooking(string flightID[], string departure[], string arrival[], stri
     cout << "Press any key to continue.. \n";
     getch();
 }
-
+// ====== FILE HANDLING ======
 // LOAD DATA
 void loadData(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount)
 {
@@ -564,6 +575,30 @@ void saveData(string flightID[], string departure[], string arrival[], string ti
         file << arrival[i] << "\n";
         file << time[i] << "\n";
         file << seats[i] << "\n";
+    }
+    file.close();
+}
+
+// LOAD HISTORY
+void loadHistory(string history[], int &historyCount)
+{
+    fstream file;
+    file.open("history.txt", ios::in);
+    while (getline(file, history[historyCount]))
+    {
+        historyCount++;
+    }
+    file.close();
+}
+
+// SAVE HISTORY
+void saveHistory(string history[], int historyCount)
+{
+    fstream file;
+    file.open("history.txt", ios::out);
+    for (int i = 0; i < historyCount; i++)
+    {
+        file << history[i] << "\n";
     }
     file.close();
 }
