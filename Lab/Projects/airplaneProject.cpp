@@ -217,7 +217,7 @@ void addFlight(string flightID[], string departure[], string arrival[], string t
         history[historyCount] = "Flight " + flightID[flightCount] + " Added";
         historyCount++;
         flightCount++;
-        availableSeats[flightCount-1] = seats[flightCount-1];
+        availableSeats[flightCount - 1] = seats[flightCount - 1];
 
         saveData(flightID, departure, arrival, time, seats, flightCount);
         saveHistory(history, historyCount);
@@ -500,7 +500,7 @@ void searchFlight(string flightID[], string departure[], string arrival[], strin
             {
                 cout << "Available Seats: " << availableSeats[i] << "\n";
             }
-            cout <<"-----------------------------------------\n\n";
+            cout << "-----------------------------------------\n\n";
 
             found = true;
         }
@@ -571,6 +571,7 @@ void cancelBooking(string flightID[], string departure[], string arrival[], stri
         if (flightID[i] == Flightid)
         {
             found = true;
+            cout << "From " << departure[i] << " to " << arrival[i] << " at " << time[i] << "\n";
             if (availableSeats[i] == "")
             {
                 availableSeats[i] = seats[i];
@@ -581,8 +582,13 @@ void cancelBooking(string flightID[], string departure[], string arrival[], stri
             {
                 seatsRightNow++;
                 availableSeats[i] = to_string(seatsRightNow);
+                cout << "Booking Cancelled! \n";
             }
-            cout << "Booking Cancelled! \n";
+            else
+            {
+                cout << "You haven't booked this flight yet.\n";
+            }
+
             break;
         }
     }
