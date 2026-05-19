@@ -1,30 +1,40 @@
 F101
-Multan 
-Karachi
-12 : 30 PM
-56
-F103
-Lahore
-Dubai
-02 : 09 PM
-45
-F110
-Multan 
-Dubai
-02 : 49 PM
-45
-F111
-Karachi 
-Tokoyo
-03 : 30 AM
-45
-F304
 Lahore
 London
-02 : 30 PM
-34
-F500
-lahore
-turkey
-03 : 30 PM
+2:30 AM
+50
+F102
+Karachi
+London
+3:05 AM
 45
+F103
+Karachi
+Canada
+1:00 AM
+37
+F104
+Lahore
+London
+6:00 PM
+45
+F201
+Lahore
+Dubai
+3:00 PM
+45
+F202
+Lahore
+Washington DC
+5:00 PM
+45
+F301
+Karachi
+Dubai
+2:09 AM
+30
+F600
+Lahore
+Tokoyo
+4:00 PM 
+30

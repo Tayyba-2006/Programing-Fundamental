@@ -8,9 +8,9 @@ using namespace std;
 
 bool adminLogin();
 
-void adminMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount, string history[], int &historyCount);
+void adminMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount, string history[], int &historyCount);
 
-void addFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount, string history[], int &historyCount);
+void addFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount, string history[], int &historyCount);
 
 void viewFlights(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
 
@@ -22,15 +22,15 @@ void sortFlights(string flightID[], string departure[], string arrival[], string
 
 void showHistory(string history[], int historyCount);
 
-void customerMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount);
+void customerMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount);
 
-void searchFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
+void searchFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount);
 
-void bookSeat(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
+void bookSeat(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount);
 
-void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
+void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount);
 
-// FILE HANDLING 
+// FILE HANDLING
 
 void saveData(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount);
 
@@ -44,18 +44,29 @@ void loadHistory(string history[], int &historyCount);
 
 int main()
 {
-    string flightID[10000];
-    string departure[10000], arrival[10000], time[10000];
-    string history[10000];
-    string seats[10000];
+    // DATA STRUCTURES
+    string flightID[100];
+    string departure[100], arrival[100], time[100];
+    string history[100];
+    string seats[100];
+    string availableSeats[100];
     int flightCount = 0;
     int historyCount = 0;
 
     loadData(flightID, departure, arrival, time, seats, flightCount);
     loadHistory(history, historyCount);
 
+    for (int i = 0; i < flightCount; i++)
+    {
+        if (availableSeats[i] == "")
+        {
+            availableSeats[i] = seats[i];
+        }
+    }
+
     while (true)
     {
+
         system("cls");
         cout << "======================================================\n";
         cout << "------------- Airplane Management System -------------\n";
@@ -76,12 +87,12 @@ int main()
         {
             if (adminLogin())
             {
-                adminMenu(flightID, departure, arrival, time, seats, flightCount, history, historyCount);
+                adminMenu(flightID, departure, arrival, time, seats, availableSeats, flightCount, history, historyCount);
             }
         }
         else if (userOption == "2")
         {
-            customerMenu(flightID, departure, arrival, time, seats, flightCount);
+            customerMenu(flightID, departure, arrival, time, seats, availableSeats, flightCount);
         }
         else if (userOption == "3")
         {
@@ -135,7 +146,7 @@ bool adminLogin()
 }
 
 // ADMIN MENU
-void adminMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount, string history[], int &historyCount)
+void adminMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount, string history[], int &historyCount)
 {
     while (true)
     {
@@ -154,7 +165,7 @@ void adminMenu(string flightID[], string departure[], string arrival[], string t
         getline(cin, adminOption);
 
         if (adminOption == "1")
-            addFlight(flightID, departure, arrival, time, seats, flightCount, history, historyCount);
+            addFlight(flightID, departure, arrival, time, seats, availableSeats, flightCount, history, historyCount);
 
         else if (adminOption == "2")
             viewFlights(flightID, departure, arrival, time, seats, flightCount);
@@ -184,33 +195,43 @@ void adminMenu(string flightID[], string departure[], string arrival[], string t
 }
 
 // ADD
-void addFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount, string history[], int &historyCount)
+void addFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount, string history[], int &historyCount)
 {
-    cout << "Enter Flight ID: ";
-    getline(cin, flightID[flightCount]);
+    if (flightCount <= 100)
+    {
+        cout << "Enter Flight ID: ";
+        getline(cin, flightID[flightCount]);
 
-    cout << "Enter Departure: ";
-    getline(cin, departure[flightCount]);
+        cout << "Enter Departure: ";
+        getline(cin, departure[flightCount]);
 
-    cout << "Enter Arrival: ";
-    getline(cin, arrival[flightCount]);
+        cout << "Enter Arrival: ";
+        getline(cin, arrival[flightCount]);
 
-    cout << "Enter Time: ";
-    getline(cin, time[flightCount]);
+        cout << "Enter Time: ";
+        getline(cin, time[flightCount]);
 
-    cout << "Enter Seats: ";
-    getline(cin, seats[flightCount]);
+        cout << "Enter Seats: ";
+        getline(cin, seats[flightCount]);
 
-    history[historyCount] = "Flight " + flightID[flightCount] + " Added";
-    historyCount++;
-    flightCount++;
+        history[historyCount] = "Flight " + flightID[flightCount] + " Added";
+        historyCount++;
+        flightCount++;
+        availableSeats[flightCount-1] = seats[flightCount-1];
 
-    saveData(flightID, departure, arrival, time, seats, flightCount);
-    saveHistory(history, historyCount);
+        saveData(flightID, departure, arrival, time, seats, flightCount);
+        saveHistory(history, historyCount);
 
-    cout << "Flight Added Successfully!  \n";
-    cout << "Press any key to continue.. \n";
-    getch();
+        cout << "Flight Added Successfully!  \n";
+        cout << "Press any key to continue.. \n";
+        getch();
+    }
+    else
+    {
+        cout << "Flight cannot be added! \n";
+        cout << "Press any key to continue.. \n";
+        getch();
+    }
 }
 
 // VIEW
@@ -410,7 +431,7 @@ void showHistory(string history[], int historyCount)
 }
 
 // CUSTOMER MENU
-void customerMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], int &flightCount)
+void customerMenu(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int &flightCount)
 {
     while (true)
     {
@@ -430,13 +451,13 @@ void customerMenu(string flightID[], string departure[], string arrival[], strin
             viewFlights(flightID, departure, arrival, time, seats, flightCount);
 
         else if (customerOption == "2")
-            searchFlight(flightID, departure, arrival, time, seats, flightCount);
+            searchFlight(flightID, departure, arrival, time, seats, availableSeats, flightCount);
 
         else if (customerOption == "3")
-            bookSeat(flightID, departure, arrival, time, seats, flightCount);
+            bookSeat(flightID, departure, arrival, time, seats, availableSeats, flightCount);
 
         else if (customerOption == "4")
-            cancelBooking(flightID, departure, arrival, time, seats, flightCount);
+            cancelBooking(flightID, departure, arrival, time, seats, availableSeats, flightCount);
 
         else if (customerOption == "5")
             break;
@@ -447,7 +468,7 @@ void customerMenu(string flightID[], string departure[], string arrival[], strin
 }
 
 // SEARCH
-void searchFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount)
+void searchFlight(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount)
 {
     string from, to;
     cout << "Enter Departure: ";
@@ -462,10 +483,25 @@ void searchFlight(string flightID[], string departure[], string arrival[], strin
     {
         if (departure[i] == from && arrival[i] == to)
         {
+            if (availableSeats[i] == "")
+            {
+                availableSeats[i] = seats[i];
+            }
             cout << "Flight ID: " << flightID[i] << "\n";
             cout << "Departure: " << departure[i] << "\n";
             cout << "Arrival: " << arrival[i] << "\n";
             cout << "Time: " << time[i] << "\n";
+            cout << "Total seats: " << seats[i] << "\n";
+            if (availableSeats[i] == "0")
+            {
+                cout << "This flight is fully booked.\n";
+            }
+            else
+            {
+                cout << "Available Seats: " << availableSeats[i] << "\n";
+            }
+            cout <<"-----------------------------------------\n\n";
+
             found = true;
         }
     }
@@ -477,8 +513,8 @@ void searchFlight(string flightID[], string departure[], string arrival[], strin
     getch();
 }
 
-// BOOK SEAT 
-void bookSeat(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount)
+// BOOK SEAT
+void bookSeat(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount)
 {
     string IdToBook;
     cout << "Enter Flight ID to book: ";
@@ -491,19 +527,25 @@ void bookSeat(string flightID[], string departure[], string arrival[], string ti
     {
         if (flightID[i] == IdToBook)
         {
-            int availableSeats = stoi(seats[i]);
-            if (availableSeats > 0)
+            found = true;
+            cout << "From " << departure[i] << " to " << arrival[i] << " at " << time[i] << "\n";
+            if (availableSeats[i] == "")
             {
-                availableSeats--;
-                seats[i] = to_string(availableSeats);
+                availableSeats[i] = seats[i];
+            }
+            int seatsRightNow = stoi(availableSeats[i]);
+            if (seatsRightNow > 0)
+            {
+                cout << "Available Seats: " << seatsRightNow << "\n";
+                seatsRightNow--;
+                availableSeats[i] = to_string(seatsRightNow);
                 cout << "Seat Booked Successfully! \n";
-                saveData(flightID, departure, arrival, time, seats, flightCount);
             }
             else
             {
-                cout << "No seats available! \n";
+                cout << "This flight is fully booked.\n";
             }
-            found = true;
+            break;
         }
     }
 
@@ -515,7 +557,7 @@ void bookSeat(string flightID[], string departure[], string arrival[], string ti
 }
 
 // CANCEL BOOKING
-void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], int flightCount)
+void cancelBooking(string flightID[], string departure[], string arrival[], string time[], string seats[], string availableSeats[], int flightCount)
 {
     string Flightid;
     cout << "Enter Flight ID to cancel: ";
@@ -528,13 +570,20 @@ void cancelBooking(string flightID[], string departure[], string arrival[], stri
     {
         if (flightID[i] == Flightid)
         {
-
-            int availableSeats = stoi(seats[i]);
-            availableSeats++;
-            seats[i] = to_string(availableSeats);
-            cout << "Booking Cancelled! \n";
             found = true;
-            saveData(flightID, departure, arrival, time, seats, flightCount);
+            if (availableSeats[i] == "")
+            {
+                availableSeats[i] = seats[i];
+            }
+            int total = stoi(seats[i]);
+            int seatsRightNow = stoi(availableSeats[i]);
+            if (seatsRightNow < total)
+            {
+                seatsRightNow++;
+                availableSeats[i] = to_string(seatsRightNow);
+            }
+            cout << "Booking Cancelled! \n";
+            break;
         }
     }
 
